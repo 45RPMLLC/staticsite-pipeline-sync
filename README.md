@@ -1,0 +1,1 @@
+# staticsite-pipeline-sync
