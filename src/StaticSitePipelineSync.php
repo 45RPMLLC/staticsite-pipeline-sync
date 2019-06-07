@@ -16,6 +16,7 @@ use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
+use craft\services\Elements;
 
 use yii\base\Event;
 
@@ -70,13 +71,13 @@ class StaticSitePipelineSync extends Plugin
             }
         );
 
-        Event::on(
+        /*Event::on(
             Elements::class,
             Elements::EVENT_AFTER_SAVE_ELEMENT,
             function(Event $event) {
                 if ($event->element instanceof craft\elements\Entry) {
                     try {
-                        $github_user = '';
+                        $github_username = '';
                         $github_repository = '';
                         $github_repository_branch = 'master';
                         $github_login = '';
@@ -91,7 +92,7 @@ class StaticSitePipelineSync extends Plugin
                         $object_key = 'source.zip';
 
                         if( !file_exists("${store_path}${github_repository}") ){
-                            GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_user}/${github_repository}.git", "${store_path}${github_repository}");
+                            GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");
                         }
                         $repo = new GitRepository("${store_path}${github_repository}");
                         $repo->fetch('origin', [$github_repository_branch]);
@@ -119,7 +120,7 @@ class StaticSitePipelineSync extends Plugin
                     }
                 }
             }
-        );
+        );*/
 
         Craft::info(
             Craft::t(
@@ -145,9 +146,9 @@ class StaticSitePipelineSync extends Plugin
     /**
      * @inheritdoc
      */
-    protected function settingsHtml(): string
+    protected function settingsHtml()
     {
-        return Craft::$app->view->renderTemplate(
+        return Craft::$app->getView()->renderTemplate(
             'static-site-pipeline-sync/settings',
             [
                 'settings' => $this->getSettings()
