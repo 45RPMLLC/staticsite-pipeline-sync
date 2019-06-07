@@ -28,7 +28,43 @@ class Settings extends Model
     /**
      * @var string
      */
-    public $someAttribute = 'Some Default';
+    public $github_username ;
+    /**
+     * @var string
+     */
+    public $github_repository ;
+    /**
+     * @var string
+     */
+    public $github_repository_branch ;
+    /**
+     * @var string
+     */
+    public $github_login ;
+    /**
+     * @var string
+     */
+    public $github_password ;
+    /**
+     * @var string
+     */
+    public $aws_region ;
+    /**
+     * @var string
+     */
+    public $aws_access_key;
+    /**
+     * @var string
+     */
+    public $aws_secret;
+    /**
+     * @var string
+     */
+    public $s3_bucket_name;
+    /**
+     * @var string
+     */
+    public $object_key;
 
     // Public Methods
     // =========================================================================
@@ -39,8 +75,16 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['someAttribute', 'string'],
-            ['someAttribute', 'default', 'value' => 'Some Default'],
+            [['github_username',
+                'github_repository',
+                'github_repository_branch',
+                'github_login',
+                'github_password',
+                'aws_region',
+                'aws_access_key',
+                'aws_secret',
+                's3_bucket_name',
+                'object_key'], 'required' ],
         ];
     }
 }
