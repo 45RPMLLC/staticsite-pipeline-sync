@@ -16,14 +16,10 @@ use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
-use craft\services\Elements;
+use craft\events\RegisterUrlRulesEvent;
+use craft\web\UrlManager;
 
 use yii\base\Event;
-
-use Cz\Git\GitRepository;
-
-use Aws\S3\S3Client;
-use Aws\S3\Exception\S3Exception;
 
 /**
  * Class StaticSitePipelineSync
@@ -68,6 +64,15 @@ class StaticSitePipelineSync extends Plugin
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                 }
+            }
+        );
+
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_CP_URL_RULES,
+            function(RegisterUrlRulesEvent $event) {
+                $event->rules['GET static-site-pipeline-sync'] = 'static-site-pipeline-sync/cp/index';
+                $event->rules['GET static-site-pipeline-sync/publish'] = 'static-site-pipeline-sync/cp/publish';
             }
         );
 
