@@ -1,0 +1,9 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "SiteSync"|t %}
+
+{% do view.registerAssetBundle("fourtyfive\\staticsitepipelinesync\\assetbundles\\staticsitepipelinesync\\StaticSitePipelineSyncAsset") %}
+
+{% block content %}
+    <a href="/admin/static-site-pipeline-sync/publish">Publish</a>
+{% endblock %}
