@@ -79,6 +79,7 @@ class StaticSitePipelineSync extends Plugin
             }
         );
 
+        // Register our CP URL rules
         Event::on(
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
