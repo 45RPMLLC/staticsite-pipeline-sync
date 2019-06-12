@@ -18,6 +18,8 @@ use craft\services\Plugins;
 use craft\events\PluginEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;
+use craft\events\RegisterCpNavItemsEvent;
+use craft\web\twig\variables\Cp;
 
 use yii\base\Event;
 
@@ -46,6 +48,16 @@ class StaticSitePipelineSync extends Plugin
      * @var string
      */
     public $schemaVersion = '1.0.0';
+
+    /**
+     * @var boolean
+     */
+    public $hasCpSettings = true;
+
+    /**
+     * @var boolean
+     */
+    public $hasCpSection = true;
 
     // Public Methods
     // =========================================================================
@@ -76,56 +88,18 @@ class StaticSitePipelineSync extends Plugin
             }
         );
 
-        /*Event::on(
-            Elements::class,
-            Elements::EVENT_AFTER_SAVE_ELEMENT,
-            function(Event $event) {
-                if ($event->element instanceof craft\elements\Entry) {
-                    try {
-                        $github_username = '';
-                        $github_repository = '';
-                        $github_repository_branch = 'master';
-                        $github_login = '';
-                        $github_password = '';
-
-                        $store_path = CRAFT_BASE_PATH.'/storage/';
-
-                        $aws_region = 'us-east-1';
-                        $aws_access_key = "";
-                        $aws_secret = "";
-                        $s3_bucket_name = "";
-                        $object_key = 'source.zip';
-
-                        if( !file_exists("${store_path}${github_repository}") ){
-                            GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");
-                        }
-                        $repo = new GitRepository("${store_path}${github_repository}");
-                        $repo->fetch('origin', [$github_repository_branch]);
-                        exec("cd ${store_path}${github_repository}; zip -r ${store_path}${object_key} . -x *.git* 2>&1", $output);
-
-                        $s3 = new S3Client([
-                            'region'  => $aws_region,
-                            'version' => 'latest',
-                            'credentials' => [
-                                'key'    => $aws_access_key,
-                                'secret' => $aws_secret,
-                            ]
-                        ]);
-
-                        $result = $s3->putObject([
-                            'Bucket' => $s3_bucket_name,
-                            'Key'   => $object_key,
-                            'SourceFile' => $store_path.$object_key
-                        ]);
-
-                    } catch (S3Exception $e) {
-
-                        $e->getMessage();
-
-                    }
+        // Register our CP routes
+        Event::on(
+            Cp::class,
+            Cp::EVENT_REGISTER_CP_NAV_ITEMS,
+            function(RegisterCpNavItemsEvent $event) {
+                if (\Craft::$app->user->identity->admin) {
+                    $event->navItems['sync-site'] = [
+                        'label' => "Site Sync",
+                        'url' => 'static-site-pipeline-sync'
+                    ];
                 }
-            }
-        );*/
+        });
 
         Craft::info(
             Craft::t(
@@ -147,6 +121,7 @@ class StaticSitePipelineSync extends Plugin
     {
         return new Settings();
     }
+
 
     /**
      * @inheritdoc
