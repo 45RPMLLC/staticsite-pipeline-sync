@@ -22,9 +22,7 @@ class CpController extends Controller
 
     function actionIndex()
     {
-        $this->renderTemplate( 'static-site-pipeline-sync/home'
-
-        );
+        $this->renderTemplate( 'static-site-pipeline-sync/home');
     }
 
     function actionPublish()
@@ -66,16 +64,19 @@ class CpController extends Controller
                 ]
             ]);
 
-            $result = $s3->putObject([
+            /*$result = $s3->putObject([
                 'Bucket' => $s3_bucket_name,
                 'Key'   => $object_key,
                 'SourceFile' => $store_path.$object_key
+            ]);*/
+
+            return $this->asJson([
+                'message' => "Published..."
             ]);
 
-        } catch (S3Exception $e) {
-
-            $e->getMessage();
-
+        } catch (\Exception $e){
+            Craft::error(Craft::t('StaticSite-Pipeline-Sync', 'Error: {e}', ['e' => $e->getMessage()]), __METHOD__);
+            return $this->asErrorJson("Sorry, something went wrong, please try again later.");
         }
     }
 
