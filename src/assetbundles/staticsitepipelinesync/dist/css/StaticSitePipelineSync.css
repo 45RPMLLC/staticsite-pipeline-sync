@@ -9,3 +9,9 @@
  * @package   StaticSitePipelineSync
  * @since     1.0.0
  */
+.hide {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
