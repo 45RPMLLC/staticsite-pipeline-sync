@@ -71,7 +71,7 @@ class CpController extends Controller
             ]);*/
 
             return $this->asJson([
-                'message' => "Published..."
+                'message' => "Pipeline Triggered"
             ]);
 
         } catch (\Exception $e){
