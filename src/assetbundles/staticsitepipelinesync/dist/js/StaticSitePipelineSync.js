@@ -9,35 +9,41 @@
  * @package   StaticSitePipelineSync
  * @since     1.0.0
  */
-
-// Funciones asíncronas
-//(async function () {
-
 let $publishButton = document.getElementById('ssps-publish');
 $publishButton.addEventListener('click',  (e) => {
     e.preventDefault();
 
     let $loaderSVG = document.getElementById('ssps-loader');
+    let $doneMessage = document.getElementById('ssps-done');
+    let $errorMessage = document.getElementById('ssps-error');
+    let $fatalErrorMessage = document.getElementById('ssps-fatal-error');
+
     $loaderSVG.classList.remove('hide');
     $loaderSVG.classList.add('show');
 
-    fetch($publishButton.getAttribute('href'))
-        .then(function(response) {
-            $loaderSVG.classList.remove('show');
-            $loaderSVG.classList.add('hide');
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-            console.log(response.json());
-        })
-        .catch(function(err) {
-            $publishButton.classList.remove('show');
-            $publishButton.classList.add('hide');
-            console.log(err);
-            console.log('algo falló');
-        });
-});
+    let request = new XMLHttpRequest();
+    let url = $publishButton.getAttribute('href');
+    request.open('GET', url, true);
 
-//})();
+    request.onload = () => {
+        $loaderSVG.classList.remove('show');
+        $loaderSVG.classList.add('hide');
+
+        if (request.status >= 200 && request.status < 400) {
+            // Success
+            $doneMessage.classList.remove('hide');
+        } else {
+            // Error
+            $errorMessage.classList.remove('hide');
+        }
+    };
+
+    request.onerror = function() {
+        // Fatal error
+        $publishButton.classList.remove('show');
+        $publishButton.classList.add('hide');
+        $fatalErrorMessage.classList.remove('hide');
+    };
+
+    request.send();
+});
