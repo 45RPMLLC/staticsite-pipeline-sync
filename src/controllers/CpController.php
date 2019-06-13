@@ -64,11 +64,11 @@ class CpController extends Controller
                 ]
             ]);
 
-            /*$result = $s3->putObject([
+            $result = $s3->putObject([
                 'Bucket' => $s3_bucket_name,
                 'Key'   => $object_key,
                 'SourceFile' => $store_path.$object_key
-            ]);*/
+            ]);
 
             return $this->asJson([
                 'message' => "Pipeline Triggered"
