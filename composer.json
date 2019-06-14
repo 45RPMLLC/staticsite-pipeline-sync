@@ -23,7 +23,7 @@
     ],
     "require": {
         "craftcms/cms": "^3.0.0-RC1",
-        "aws/aws-sdk-php": "3.94.1",
+        "aws/aws-sdk-php": "3.100.*",
         "czproject/git-php": "3.17.0"
     },
     "autoload": {
