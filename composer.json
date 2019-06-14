@@ -11,8 +11,8 @@
         "static site pipeline sync"
     ],
     "support": {
-        "docs": "https://github.com/45RPMLLC/staticsite-pipeline-sync /static-site-pipeline-sync/blob/master/README.md",
-        "issues": "https://github.com/45RPMLLC/staticsite-pipeline-sync /static-site-pipeline-sync/issues"
+        "docs": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/blob/master/README.md",
+        "issues": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/issues"
     },
     "license": "MIT",
     "authors": [
