@@ -1,0 +1,27 @@
+/**
+ * Static Site Pipeline Sync plugin for Craft CMS
+ *
+ * Static Site Pipeline Sync CSS
+ *
+ * @author    45RPM
+ * @copyright Copyright (c) 2019 45RPM
+ * @link      https://www.45rpm.co/
+ * @package   StaticSitePipelineSync
+ * @since     1.0.0
+ */
+
+.container {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+.hide {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
+
+#ssps-loader {
+    margin: 20px 0;
+}

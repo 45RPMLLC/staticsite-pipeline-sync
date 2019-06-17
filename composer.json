@@ -1,0 +1,42 @@
+{
+    "name": "fortyfive/static-site-pipeline-sync",
+    "description": "This plugin allows trigger an AWS Pipeline based on S3 to publish a new version of a Static Website with the last version of content stored in Craft CMS.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "static site pipeline sync"
+    ],
+    "support": {
+        "docs": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/blob/master/README.md",
+        "issues": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "45RPM",
+            "homepage": "https://www.45rpm.co/"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1",
+        "aws/aws-sdk-php": "3.100.*",
+        "czproject/git-php": "3.17.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "fortyfive\\staticsitepipelinesync\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Static Site Pipeline Sync",
+        "handle": "static-site-pipeline-sync",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/45RPMLLC/staticsite-pipeline-sync /static-site-pipeline-sync/master/CHANGELOG.md",
+        "class": "fortyfive\\staticsitepipelinesync\\StaticSitePipelineSync"
+    }
+}

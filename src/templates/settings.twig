@@ -1,0 +1,108 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Static Site Pipeline Sync plugin for Craft CMS 3.x
+ *
+ * Static Site Pipeline Sync Settings.twig
+ *
+ * @author    45RPM
+ * @copyright Copyright (c) 2019 45RPM
+ * @link      https://www.45rpm.co/
+ * @package   StaticSitePipelineSync
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("fortyfive\\staticsitepipelinesync\\assetbundles\\staticsitepipelinesync\\StaticSitePipelineSyncAsset") %}
+
+{{
+    forms.textField({
+        label: "Github Username",
+        id: 'github_username',
+        name: 'github_username',
+        value: settings.github_username
+    })
+}}
+
+{{
+    forms.textField({
+        label: "Github Repository Name",
+        id: 'github_repository',
+        name: 'github_repository',
+        value: settings.github_repository
+    })
+}}
+
+{{
+    forms.textField({
+        label: "Repository Branch",
+        id: 'github_repository_branch',
+        name: 'github_repository_branch',
+        value: settings.github_repository_branch? settings.github_repository_branch : 'master'
+    })
+}}
+
+{{
+    forms.textField({
+        label: 'Github Login',
+        id: 'github_login',
+        name: 'github_login',
+        value: settings.github_login
+    })
+}}
+
+{{
+    forms.passwordField({
+        label: 'Github Password',
+        id: 'github_password',
+        name: 'github_password',
+        value: settings.github_password
+    })
+}}
+
+{{
+    forms.textField({
+        label: "AWS Region",
+        id: 'aws_region',
+        name: 'aws_region',
+        value: settings.aws_region ? settings.aws_region : 'us-east-1'
+    })
+}}
+
+{{
+    forms.passwordField({
+        label: 'AWS Access Key',
+        id: 'aws_access_key',
+        name: 'aws_access_key',
+        value: settings.aws_access_key
+    })
+}}
+
+{{
+    forms.passwordField({
+        label: 'AWS Secret',
+        id: 'aws_secret',
+        name: 'aws_secret',
+        value: settings.aws_secret
+    })
+}}
+
+{{
+    forms.textField({
+        label: "AWS S3 Bucket Name",
+        id: 's3_bucket_name',
+        name: 's3_bucket_name',
+        value: settings.s3_bucket_name
+    })
+}}
+
+{{
+    forms.textField ({
+        label: "Object Key Name",
+        id: 'object_key',
+        name: 'object_key',
+        value: settings.object_key ? settings.object_key : 'source.zip'
+    })
+}}
