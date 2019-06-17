@@ -6,7 +6,9 @@ This plugin allows trigger an AWS Pipeline based on S3 to publish a new version 
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+- Create an Amazon S3 bucket for the sample applications and enable versioning on that bucket. If you don't know how to do it [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-simple-s3.html#s3-create-s3-bucket) is a tutorial.
+- AMI user (Key and Secret) with write access to the previous bucket.
+- GitHub user (user and password) with read access to the repository where is hosted the static site app.
 
 ## Installation
 
@@ -18,26 +20,18 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require 45RPMLLC/staticsite-pipeline-sync /static-site-pipeline-sync
+        composer require fortyfive/staticsite-pipeline-sync /static-site-pipeline-sync
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Static Site Pipeline Sync.
 
-## Static Site Pipeline Sync Overview
-
--Insert text here-
-
-## Configuring Static Site Pipeline Sync
-
--Insert text here-
+4.- Go to the Plugin Settings and set the data required there. 
 
 ## Using Static Site Pipeline Sync
 
--Insert text here-
+1. Be sure that all the Plugin settings are in place and that are correct.
 
-## Static Site Pipeline Sync Roadmap
+2. After update your content in Craft CMS go to the Panel option - left side - **Site Sync**.
 
-Some things to do, and ideas for potential features:
-
-* Release it
+2. Make click on the button **Trigger Pipeline**.
 
 Brought to you by [45RPM](https://www.45rpm.co/)
