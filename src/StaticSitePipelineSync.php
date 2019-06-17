@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2019 45RPM
  */
 
-namespace fourtyfive\staticsitepipelinesync;
+namespace fortyfive\staticsitepipelinesync;
 
-use fourtyfive\staticsitepipelinesync\models\Settings;
+use fortyfive\staticsitepipelinesync\models\Settings;
 
 use Craft;
 use craft\base\Plugin;

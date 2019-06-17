@@ -1,7 +1,7 @@
 <?php
 
 
-namespace fourtyfive\staticsitepipelinesync\controllers;
+namespace fortyfive\staticsitepipelinesync\controllers;
 
 use Craft;
 use craft\web\Controller;
@@ -30,17 +30,17 @@ class CpController extends Controller
         try {
             $store_path = CRAFT_BASE_PATH.'/storage/';
 
-            $github_username = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_username;
-            $github_repository = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_repository;
-            $github_repository_branch = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_repository_branch;
-            $github_login = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_login;
-            $github_password = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_password;
+            $github_username = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_username;
+            $github_repository = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_repository;
+            $github_repository_branch = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_repository_branch;
+            $github_login = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_login;
+            $github_password = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->github_password;
 
-            $aws_region = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_region;
-            $aws_access_key = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_access_key;
-            $aws_secret = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_secret;
-            $s3_bucket_name = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->s3_bucket_name;
-            $object_key = \fourtyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->object_key;
+            $aws_region = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_region;
+            $aws_access_key = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_access_key;
+            $aws_secret = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->aws_secret;
+            $s3_bucket_name = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->s3_bucket_name;
+            $object_key = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->object_key;
 
             if( !file_exists("${store_path}${github_repository}") ){
                 GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");

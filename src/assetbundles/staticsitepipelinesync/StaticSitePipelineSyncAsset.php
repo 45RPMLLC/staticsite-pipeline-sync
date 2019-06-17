@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2019 45RPM
  */
 
-namespace fourtyfive\staticsitepipelinesync\assetbundles\StaticSitePipelineSync;
+namespace fortyfive\staticsitepipelinesync\assetbundles\StaticSitePipelineSync;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -29,7 +29,7 @@ class StaticSitePipelineSyncAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@fourtyfive/staticsitepipelinesync/assetbundles/staticsitepipelinesync/dist";
+        $this->sourcePath = "@fortyfive/staticsitepipelinesync/assetbundles/staticsitepipelinesync/dist";
 
         $this->depends = [
             CpAsset::class,

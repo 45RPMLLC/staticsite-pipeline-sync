@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2019 45RPM
  */
 
-namespace fourtyfive\staticsitepipelinesync\models;
+namespace fortyfive\staticsitepipelinesync\models;
 
-use fourtyfive\staticsitepipelinesync\StaticSitePipelineSync;
+use fortyfive\staticsitepipelinesync\StaticSitePipelineSync;
 
 use Craft;
 use craft\base\Model;
