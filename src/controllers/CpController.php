@@ -60,7 +60,10 @@ class CpController extends Controller
             $object_key = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->object_key;
 
             if (file_exists("${store_path}${github_repository}")) {
+                // Delete existing repository directory
                 exec("rm -Rf ${store_path}${github_repository} 2>&1", $output);
+                // Delete existing object ( zip file )
+                exec("rm -Rf ${store_path}${object_key} 2>&1", $output);
             }
 
             GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");
