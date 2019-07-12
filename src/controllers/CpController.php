@@ -22,7 +22,24 @@ class CpController extends Controller
 
     function actionIndex()
     {
-        $this->renderTemplate( 'static-site-pipeline-sync/home');
+        $hasSettings = FALSE;
+        $pluginSettings = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings();
+        if ($pluginSettings->github_username &&
+            $pluginSettings->github_repository &&
+            $pluginSettings->github_repository_branch &&
+            $pluginSettings->github_login &&
+            $pluginSettings->github_password &&
+            $pluginSettings->aws_region &&
+            $pluginSettings->aws_access_key &&
+            $pluginSettings->aws_secret &&
+            $pluginSettings->s3_bucket_name &&
+            $pluginSettings->object_key) {
+            $hasSettings = TRUE;
+        }
+
+        $this->renderTemplate( 'static-site-pipeline-sync/home', [
+                                                                            'hasSettings' => $hasSettings
+                                                                        ]);
     }
 
     function actionPublish()
@@ -42,15 +59,18 @@ class CpController extends Controller
             $s3_bucket_name = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->s3_bucket_name;
             $object_key = \fortyfive\staticsitepipelinesync\StaticSitePipelineSync::getInstance()->getSettings()->object_key;
 
-            if( !file_exists("${store_path}${github_repository}") ){
-                GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");
+            if (file_exists("${store_path}${github_repository}")) {
+                // Delete existing repository directory
+                exec("rm -Rf ${store_path}${github_repository} 2>&1", $output);
+                // Delete existing object ( zip file )
+                exec("rm -Rf ${store_path}${object_key} 2>&1", $output);
             }
+
+            GitRepository::cloneRepository("https://${github_login}:${github_password}@github.com/${github_username}/${github_repository}.git", "${store_path}${github_repository}");
+
             $repo = new GitRepository("${store_path}${github_repository}");
             if ( $repo->getCurrentBranchName() !== $github_repository_branch ){
                 $repo->checkout($github_repository_branch);
-            }
-            if( $repo->hasChanges() ) {
-                $repo->pull('origin');
             }
 
             exec("cd ${store_path}${github_repository}; zip -r ${store_path}${object_key} . -x *.git* 2>&1", $output);
