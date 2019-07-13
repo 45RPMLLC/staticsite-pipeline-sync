@@ -11,6 +11,7 @@
             <p>Please go to the settings of the plugin and be sure that all the data required is set.</p>
         {% else %}
             <p>Make click in the button to trigger the AWS Pipeline and publish a new version of the site.</p>
+            <p><i>NOTE: your changes can take 5 or more minutes to be reflected in the site.</i></p>
             <div class="btngroup submit">
                 <a id="ssps-publish" class="btn submit" href="{{ cpUrl('static-site-pipeline-sync/publish') }}">Trigger Pipeline</a>
             </div>
