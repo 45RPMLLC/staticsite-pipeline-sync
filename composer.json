@@ -38,7 +38,7 @@
         "name": "Static Site Pipeline Sync",
         "handle": "static-site-pipeline-sync",
         "hasCpSettings": true,
-        "hasCpSection": true,
+        "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/45RPMLLC/staticsite-pipeline-sync /static-site-pipeline-sync/master/CHANGELOG.md",
         "class": "fortyfive\\staticsitepipelinesync\\StaticSitePipelineSync"
     }
