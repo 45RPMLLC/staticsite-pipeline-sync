@@ -12,16 +12,48 @@
 
 .container {
     width: 70%;
-    margin: 0 auto;
-    padding: 20px 30px;
+    padding: 10px 10px;
 }
 .hide {
     display: none !important;
 }
 .show {
-    display: block !important;
+    display: inline-block !important;
 }
 
-#ssps-loader {
-    margin: 20px 0;
+.ssps-message {
+    margin: 0 20px;
+}
+
+.ssps-loader {
+    margin: 0 20px;
+}
+
+.submit {
+    margin: 5px 0;
+}
+
+.field-half-first {
+    padding-right: 5%;
+}
+
+.field-half {
+    display: inline-block;
+    width: 45%;
+}
+
+.deploy-instructions {
+    padding: 0 25px 10px !important;
+}
+
+.deploy-instructions li {
+    padding: 5px 0;
+}
+
+.deploy-instructions li ol {
+    list-style-type: lower-alpha;
+}
+
+.deploy-instructions li ol li{
+    padding: 1px 0 !important;
 }
