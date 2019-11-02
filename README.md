@@ -1,14 +1,14 @@
 # Static Site Pipeline Sync plugin for Craft CMS 3.x
 
-This plugin allows trigger an AWS Pipeline based on S3 to publish a new version of a Static Website with the last version of content stored in Craft CMS.
-
-![Screenshot](resources/img/plugin-logo.png)
+This plugin facilitates publishing content to static generator tools (e.g. Gatsby) when the build / publishing  process is hosted on AWS. It provides a simple interface that allows users to push content from Craft CMS to an AWS CodeBuild project.
 
 ## Requirements
 
-- Create an Amazon S3 bucket for the sample applications and enable versioning on that bucket. If you don't know how to do it [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-simple-s3.html#s3-create-s3-bucket) is a tutorial.
-- AMI user (Key and Secret) with write access to the previous bucket.
-- GitHub user (user and password) with read access to the repository where is hosted the static site app.
+- This plugin requires Craft CMS 3.2.0 or later
+- A valid AWS user with an access key and secret (with CodeBuild and S3 access policies)
+- An AWS CodeBuild project
+- An S3 bucket to upload output artifacts
+- A valid Git URL repository (Github or BitBucket)
 
 ## Installation
 
@@ -30,8 +30,8 @@ To install the plugin, follow these instructions.
 
 1. Be sure that all the Plugin settings are in place and that are correct.
 
-2. After update your content in Craft CMS go to the Panel option - left side - **Site Sync**.
+2. Pay special attention to the **Project Settings** table, make sure you relate the right **Git branch** to the correct **CodeBuild Project**, otherwise you could end up publishing changes to the wrong environment.
 
-2. Make click on the button **Trigger Pipeline**.
+3. After all settings are properly saved, an additional menu option appears on the **Utilities** menu called **Push Content**, follow the instructions and you should be able to trigger builds from within Craft CMS.
 
-Brought to you by [45RPM](https://www.45rpm.co/)
+From the desk of [45RPM](https://www.45rpm.co/)

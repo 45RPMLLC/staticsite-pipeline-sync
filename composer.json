@@ -1,6 +1,6 @@
 {
     "name": "fortyfive/static-site-pipeline-sync",
-    "description": "This plugin allows trigger an AWS Pipeline based on S3 to publish a new version of a Static Website with the last version of content stored in Craft CMS.",
+    "description": "Gives Craft CMS the ability to trigger AWS CodeBuild projects to update the content of static sites. (where the content source is of course Craft CMS)",
     "type": "craft-plugin",
     "keywords": [
         "craft",
@@ -9,9 +9,10 @@
         "craft-plugin",
         "static-site",
         "pipeline",
-        "aws-pipeline",
+        "aws-codebuild",
         "pipeline-sync",
-        "static-site-pipeline-sync"
+        "static-site-pipeline-sync",
+        "publication-workflow",
     ],
     "support": {
         "docs": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/blob/master/README.md",

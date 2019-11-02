@@ -31,6 +31,7 @@ return [
     'git_url' => 'https://github.com/username/repo.git',
     'buildProjects' => [
         [
+            'id' => 'Development',
             'name' => 'Dev Build',
             'branch' => 'master',
             'enable' => true

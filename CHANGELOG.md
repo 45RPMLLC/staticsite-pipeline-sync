@@ -7,3 +7,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.0 - 2019-05-31
 ### Added
 - Initial release
+
+## 2.0.0 - 2019-10-31
+### Added
+- BuildController class
+- Utiliy class
+- _settings and _utility twig templates
+
+### Changed
+- Plugin behavior to trigger CodeBuild instead of CodePipeline
+- Plugin menu location from sidebar navigation to Utilities menu navigation
+- Model properties and added build project related properties
+- Syntax to follow PHP7.2 and Craft code guidelines
+- Translation file to match replacement placeholders inside classes
+- config.php to reflect new available properties inside the model
+- CSS rules and added new selectors
+- JS file to trigger ajax requests from the new plugin interface  
+ 
+### Removed
+- CpController class
+- home and settings twig templates
+
