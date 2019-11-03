@@ -12,7 +12,7 @@
         "aws-codebuild",
         "pipeline-sync",
         "static-site-pipeline-sync",
-        "publication-workflow",
+        "publication-workflow"
     ],
     "support": {
         "docs": "https://github.com/45RPMLLC/staticsite-pipeline-sync/static-site-pipeline-sync/blob/master/README.md",
