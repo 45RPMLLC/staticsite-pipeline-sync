@@ -9,42 +9,50 @@
  * @package   StaticSitePipelineSync
  * @since     1.0.0
  */
-let $publishButton = document.getElementById('ssps-publish');
-$publishButton.addEventListener('click',  (e) => {
-    e.preventDefault();
+let $deployButtons = document.getElementsByClassName('ssps-publish');
+for (let i = 0; i < $deployButtons.length; i++) {
+    $deployButtons[i].addEventListener('click', function (event) {
+        event.preventDefault();
+        //
+        let $utility_status = this.nextElementSibling;
+        let $loaderSVG = $utility_status.firstElementChild;
+        let $message = $utility_status.lastElementChild;
 
-    let $loaderSVG = document.getElementById('ssps-loader');
-    let $doneMessage = document.getElementById('ssps-done');
-    let $errorMessage = document.getElementById('ssps-error');
-    let $fatalErrorMessage = document.getElementById('ssps-fatal-error');
+        $loaderSVG.classList.remove('hide');
+        $loaderSVG.classList.add('show');
 
-    $loaderSVG.classList.remove('hide');
-    $loaderSVG.classList.add('show');
+        let request = new XMLHttpRequest();
+        let url = this.getAttribute('href');
 
-    let request = new XMLHttpRequest();
-    let url = $publishButton.getAttribute('href');
-    request.open('GET', url, true);
-    $publishButton.classList.add('hide');
-    request.onload = () => {
-        $loaderSVG.classList.remove('show');
-        $loaderSVG.classList.add('hide');
+        request.open('GET', url, true);
 
-        if (request.status >= 200 && request.status < 400) {
-            // Success
-            $doneMessage.classList.remove('hide');
-        } else {
-            // Error
-            $errorMessage.classList.remove('hide');
-        }
-        $publishButton.classList.remove('hide');
-    };
+        this.classList.add('disabled');
 
-    request.onerror = function() {
-        // Fatal error
-        $publishButton.classList.remove('show');
-        $publishButton.classList.add('hide');
-        $fatalErrorMessage.classList.remove('hide');
-    };
+        request.onload = () => {
+            $loaderSVG.classList.remove('show');
+            $loaderSVG.classList.add('hide');
+            $message.classList.remove('hide');
+            $message.classList.add('show');
+            let response = JSON.parse(request.response);
+            if (response.message) {
+                $message.innerHTML = response.message;
+            } else {
+                $message.innerHTML = response.error;
+            }
+            this.classList.remove('disabled');
+        };
 
-    request.send();
-});
+        request.onerror = function() {
+            // Fatal error
+            console.log('** An error ocurred during the transaction, try again later');
+        };
+
+        request.send();
+
+        setTimeout(() => {
+            $message.classList.remove('show');
+            $message.classList.add('hide');
+            $message.innerHTML = '';
+        }, 5000);
+    });
+} // end for

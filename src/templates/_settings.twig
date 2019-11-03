@@ -1,0 +1,163 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{#
+/**
+ * Static Site Pipeline Sync plugin for Craft CMS 3.x
+ *
+ * This plugin allows to trigger an AWS CodeBuild remotely, to publish a new version
+ * of a static website with the latest version of content stored in Craft CMS.
+ *
+ * @link      https://www.45rpm.co/
+ * @copyright Copyright (c) 2019 45RPM
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("fortyfive\\staticsitepipelinesync\\assetbundles\\staticsitepipelinesync\\StaticSitePipelineSyncAsset") %}
+
+<div class="field">
+    <div class="heading">
+        <h2>Source Settings</h2>
+        <div class="instructions">
+            <p>
+                Account information that allow us to trigger the AWS code build project(s) from Craft CMS.
+            </p>
+        </div>
+    </div>
+</div>
+{{
+    forms.textField({
+        label: "Region",
+        id: 'aws_region',
+        name: 'aws_region',
+        instructions: 'A valid AWS region (for example, us-east-1, us-west-2, eu-west-1).',
+        value: settings.aws_region ? settings.aws_region : 'us-east-1',
+        required: true
+    })
+}}
+
+<div class="field">
+    <div class="field-half field-half-first">
+        {{
+            forms.passwordField({
+                label: 'Access Key',
+                id: 'aws_access_key',
+                name: 'aws_access_key',
+                instructions: 'A valid access key ID (for example, AKIAIOSFODNN7EXAMPLE)',
+                required: true,
+                value: settings.aws_access_key
+            })
+        }}
+    </div>
+    <div class="field-half">
+        {{
+            forms.passwordField({
+                label: 'Access Secret',
+                id: 'aws_secret',
+                name: 'aws_secret',
+                instructions: 'A valid secret access key (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY)',
+                required: true,
+                value: settings.aws_secret
+            })
+        }}
+    </div>
+</div>
+
+{{
+    forms.textField({
+        label: "S3 Bucket",
+        id: 's3_bucket',
+        name: 's3_bucket',
+        instructions: 'A valid S3 bucket name that will be used as the location for the artifact output during the build process, no need to specify the full ARN (for example, codebuild-us-east-1-72839302)',
+        required: true,
+        value: settings.s3_bucket
+    })
+}}
+
+<div class="field">
+    <div class="heading">
+        <label for="git_source" class="required">Git Source</label>
+        <div class="instructions">
+            <p>Select a Git Service Provider</p>
+        </div>
+    </div>
+        {{
+            forms.select({
+                id: 'git_source',
+                name: 'git_source',
+                options: {
+                    GitHub: 'GitHub',
+                    BitBucket: 'BitBucket'
+                },
+                value: settings.git_source
+            })
+        }}
+</div>
+
+{{
+    forms.textField({
+        label: "Git URL",
+        id: 'git_url',
+        name: 'git_url',
+        instructions: 'The HTTPS clone URL to the repository that contains the source and the build spec (for example, https://github.com/user/repository_name.git).',
+        required: true,
+        value: settings.git_url
+    })
+}}
+
+<hr/>
+
+<div class="field">
+    <div class="heading">
+        <h2>Project Settings</h2>
+        <div class="instructions">
+            <p>
+                A list of active build projects that can be trigger from the CMS, the values on the table need to match the ones from both your AWS account and Git
+                repository. Be aware that in order for the project to build successfully you need to perform additional actions on your AWS account.
+            </p>
+            <p>
+                For source code in a GitHub repository, you must connect your AWS account to your GitHub account. Use the AWS CodeBuild console to start creating a
+                build project. When you use the console to connect (or reconnect) with GitHub, on the GitHub <b>Authorize application</b> page, for <b>Organization
+                access</b>, choose <b>Request access</b> next to each repository you want to allow AWS CodeBuild to have access to, and then choose
+                <b>Authorize application</b>. (After you have connected to your GitHub account, you do not need to finish creating the build project.
+                You can leave the AWS CodeBuild console.)
+            </p>
+            <p>
+                For source code in a Bitbucket repository, you must connect your AWS account to your Bitbucket account. Use the AWS CodeBuild console to start creating a
+                build project. When you use the console to connect (or reconnect) with Bitbucket, on the Bitbucket <b>Confirm access to your account</b> page, choose
+                <b>Grant access</b>. (After you have connected to your Bitbucket account, you do not need to finish creating the build project. You can leave the AWS
+                CodeBuild console.)
+            </p>
+        </div>
+    </div>
+</div>
+
+{{
+    forms.editableTable({
+        id: 'buildProjects',
+        name: 'buildProjects',
+        addRowLabel: 'Add a new project',
+        cols: {
+            id: {
+                heading: 'Identifier',
+                type: 'singleline'
+            },
+            name: {
+                heading: 'Project Name',
+                type: 'singleline'
+            },
+            branch: {
+                heading: 'Git branch',
+                type: 'singleline'
+            },
+            enable: {
+                heading: 'Enable',
+                type: 'lightswitch'
+            }
+        },
+        rows: settings['buildProjects']
+    })
+}}
+
+

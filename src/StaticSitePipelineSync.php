@@ -2,7 +2,8 @@
 /**
  * Static Site Pipeline Sync plugin for Craft CMS 3.x
  *
- * This plugin allows trigger an AWS Pipeline based on S3 to publish a new version of a Static Website with the last version of content stored in Craft CMS.
+ * This plugin allows to trigger an AWS CodeBuild remotely, to publish a new version
+ * of a static website with the latest version of content stored in Craft CMS.
  *
  * @link      https://www.45rpm.co/
  * @copyright Copyright (c) 2019 45RPM
@@ -11,14 +12,17 @@
 namespace fortyfive\staticsitepipelinesync;
 
 use fortyfive\staticsitepipelinesync\models\Settings;
+use fortyfive\staticsitepipelinesync\utilities\Utility;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
+use craft\services\Utilities;
 use craft\events\PluginEvent;
 use craft\events\RegisterUrlRulesEvent;
-use craft\web\UrlManager;
 use craft\events\RegisterCpNavItemsEvent;
+use craft\events\RegisterComponentTypesEvent;
+use craft\web\UrlManager;
 use craft\web\twig\variables\Cp;
 
 use yii\base\Event;
@@ -28,7 +32,7 @@ use yii\base\Event;
  *
  * @author    45RPM
  * @package   StaticSitePipelineSync
- * @since     1.0.0
+ * @since     1.1.0
  *
  */
 class StaticSitePipelineSync extends Plugin
@@ -47,17 +51,12 @@ class StaticSitePipelineSync extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.1.0';
 
     /**
      * @var boolean
      */
     public $hasCpSettings = true;
-
-    /**
-     * @var boolean
-     */
-    public $hasCpSection = true;
 
     // Public Methods
     // =========================================================================
@@ -71,11 +70,10 @@ class StaticSitePipelineSync extends Plugin
         self::$plugin = $this;
 
         Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
+            Utilities::class,
+            Utilities::EVENT_REGISTER_UTILITY_TYPES,
+            function (RegisterComponentTypesEvent $event) {
+                $event->types[] = Utility::class;
             }
         );
 
@@ -83,24 +81,10 @@ class StaticSitePipelineSync extends Plugin
         Event::on(
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function(RegisterUrlRulesEvent $event) {
-                $event->rules['GET static-site-pipeline-sync'] = 'static-site-pipeline-sync/cp/index';
-                $event->rules['GET static-site-pipeline-sync/publish'] = 'static-site-pipeline-sync/cp/publish';
+            function (RegisterUrlRulesEvent $event) {
+                $event->rules['static-site-pipeline-sync/deploy'] = 'static-site-pipeline-sync/build/deploy';
             }
         );
-
-        // Register our CP routes
-        Event::on(
-            Cp::class,
-            Cp::EVENT_REGISTER_CP_NAV_ITEMS,
-            function(RegisterCpNavItemsEvent $event) {
-                if (\Craft::$app->user->identity->admin) {
-                    $event->navItems['sync-site'] = [
-                        'label' => "Site Sync",
-                        'url' => 'static-site-pipeline-sync'
-                    ];
-                }
-        });
 
         Craft::info(
             Craft::t(
@@ -118,20 +102,17 @@ class StaticSitePipelineSync extends Plugin
     /**
      * @inheritdoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }
 
-
     /**
      * @inheritdoc
      */
-    protected function settingsHtml()
+    protected function settingsHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate(
-            'static-site-pipeline-sync/settings',
-            [
+        return Craft::$app->getView()->renderTemplate('static-site-pipeline-sync/_settings', [
                 'settings' => $this->getSettings()
             ]
         );

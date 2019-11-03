@@ -2,7 +2,8 @@
 /**
  * Static Site Pipeline Sync plugin for Craft CMS 3.x
  *
- * This plugin allows trigger an AWS Pipeline based on S3 to publish a new version of a Static Website with the last version of content stored in Craft CMS.
+ * This plugin allows to trigger an AWS CodeBuild remotely, to publish a new version
+ * of a static website with the latest version of content stored in Craft CMS.
  *
  * @link      https://www.45rpm.co/
  * @copyright Copyright (c) 2019 45RPM
@@ -10,12 +11,19 @@
 
 namespace fortyfive\staticsitepipelinesync\models;
 
-use fortyfive\staticsitepipelinesync\StaticSitePipelineSync;
-
 use Craft;
 use craft\base\Model;
 
 /**
+ * Static Site Pipeline Sync Settings Model
+ *
+ * This is a model used to define the plugin's settings.
+ *
+ * Models are containers for data. Just about every time information is passed
+ * between services, controllers, and templates in Craft, it’s passed via a model.
+ *
+ * https://craftcms.com/docs/plugins/models
+ *
  * @author    45RPM
  * @package   StaticSitePipelineSync
  * @since     1.0.0
@@ -28,43 +36,37 @@ class Settings extends Model
     /**
      * @var string
      */
-    public $github_username ;
-    /**
-     * @var string
-     */
-    public $github_repository ;
-    /**
-     * @var string
-     */
-    public $github_repository_branch ;
-    /**
-     * @var string
-     */
-    public $github_login ;
-    /**
-     * @var string
-     */
-    public $github_password ;
-    /**
-     * @var string
-     */
     public $aws_region ;
+
     /**
      * @var string
      */
     public $aws_access_key;
+
     /**
      * @var string
      */
     public $aws_secret;
+
     /**
      * @var string
      */
-    public $s3_bucket_name;
+    public $git_source;
+
     /**
      * @var string
      */
-    public $object_key;
+    public $git_url;
+
+    /**
+     * @var string
+     */
+    public $s3_bucket;
+
+    /**
+     * @var array
+     */
+    public $buildProjects;
 
     // Public Methods
     // =========================================================================
@@ -72,19 +74,11 @@ class Settings extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['github_username',
-                'github_repository',
-                'github_repository_branch',
-                'github_login',
-                'github_password',
-                'aws_region',
-                'aws_access_key',
-                'aws_secret',
-                's3_bucket_name',
-                'object_key'], 'required' ],
+            [['aws_region', 'aws_access_key', 'aws_secret', 'git_source', 'git_url', 's3_bucket'], 'required' ],
+            [['buildProjects'], 'safe'],
         ];
     }
 }

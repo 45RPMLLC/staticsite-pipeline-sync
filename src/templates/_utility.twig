@@ -1,0 +1,96 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+
+{#
+/**
+ * Static Site Pipeline Sync plugin for Craft CMS 3.x
+ *
+ * This plugin allows to trigger an AWS CodeBuild remotely, to publish a new version
+ * of a static website with the latest version of content stored in Craft CMS.
+ *
+ * @link      https://www.45rpm.co/
+ * @copyright Copyright (c) 2019 45RPM
+ */
+#}
+
+<div class="container">
+    <h1>Build Instructions</h1>
+    <ol class="deploy-instructions">
+        <li>Click the button with the project name you want to build, doing this will push any content changes made here to your static site.</li>
+        <li>Click the button only once, clicking more than once will not make the publication go faster and the project will be built several times.</li>
+        <li>Build time takes between 3 to 5 minutes, it depends on:
+            <ol>
+                <li>The size of the site</li>
+                <li>Any custom actions executed during the build</li>
+            </ol>
+        </li>
+        <li>To monitor the build progress, log into your AWS account and check the build history of the project.</li>
+        <li>Double check the build project information you saved on the settings page, even when the build is successfully trigger it doesn't guarantee the build will complete.</li>
+        <li>The plugin always triggers the HEAD commit from the specified branch.</li>
+        <li>If you don't see any buttons on this page, make sure you've added the correct information on the settings page of the plugin and that your project(s) are enabled.</li>
+    </ol>
+    <hr/>
+    <div class="hooks">
+        {% for i, buildProject in buildProjects  %}
+            {% if buildProject['enable'] == true %}
+                <div class="buttons btngroup submit">
+                    <a class="ssps-publish btn submit" href="{{ cpUrl('static-site-pipeline-sync/deploy', {'name': buildProject['name']}) }}">{{ 'Build {name}' | t({ name: buildProject['id']}) }}</a>
+                    <div class="utility-status">
+                        <svg class="hide ssps-loader" width="30" height="30" viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" fill="#222">
+                            <rect y="10" width="15" height="120" rx="6">
+                                <animate attributeName="height"
+                                         begin="0.5s" dur="1s"
+                                         values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
+                                         repeatCount="indefinite" />
+                                <animate attributeName="y"
+                                         begin="0.5s" dur="1s"
+                                         values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
+                                         repeatCount="indefinite" />
+                            </rect>
+                            <rect x="30" y="10" width="15" height="120" rx="6">
+                                <animate attributeName="height"
+                                         begin="0.25s" dur="1s"
+                                         values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
+                                         repeatCount="indefinite" />
+                                <animate attributeName="y"
+                                         begin="0.25s" dur="1s"
+                                         values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
+                                         repeatCount="indefinite" />
+                            </rect>
+                            <rect x="60" width="15" height="140" rx="6">
+                                <animate attributeName="height"
+                                         begin="0s" dur="1s"
+                                         values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
+                                         repeatCount="indefinite" />
+                                <animate attributeName="y"
+                                         begin="0s" dur="1s"
+                                         values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
+                                         repeatCount="indefinite" />
+                            </rect>
+                            <rect x="90" y="10" width="15" height="120" rx="6">
+                                <animate attributeName="height"
+                                         begin="0.25s" dur="1s"
+                                         values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
+                                         repeatCount="indefinite" />
+                                <animate attributeName="y"
+                                         begin="0.25s" dur="1s"
+                                         values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
+                                         repeatCount="indefinite" />
+                            </rect>
+                            <rect x="120" y="10" width="15" height="120" rx="6">
+                                <animate attributeName="height"
+                                         begin="0.5s" dur="1s"
+                                         values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
+                                         repeatCount="indefinite" />
+                                <animate attributeName="y"
+                                         begin="0.5s" dur="1s"
+                                         values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
+                                         repeatCount="indefinite" />
+                            </rect>
+                        </svg>
+                        <h3 class="ssps-message hide"></h3>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
