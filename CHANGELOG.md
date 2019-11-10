@@ -4,9 +4,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.0 - 2019-05-31
+## 2.1.0 - 2019-11-09
 ### Added
-- Initial release
+- New icons for plugin
+- [Sweet Alert 2](https://sweetalert2.github.io/#examples) for confirmation box
+
+### Changed
+- Ajax behavior for the utilities buttons, they now display a confirmation box and then a success / error message
+- Change XMLHttpRequest request to be Promise-based
+- Change sucess message from BuildController to return the build ID
+- StaticSitePipelineSyncAsset.php to include new Sweet Alert js script
+- Added more insightful names for the columns on the settings page
+
+### Removed
+- Resources folder
+- Unnecessary HTML from the _utility.twig view
+- Unused selectors from the CSS file
+
+## 2.0.1 - 2019-11-01
+### Changed
+- Updated composer.json to fix a syntax issue
 
 ## 2.0.0 - 2019-10-31
 ### Added
@@ -28,3 +45,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - CpController class
 - home and settings twig templates
 
+## 1.0.0 - 2019-05-31
+### Added
+- Initial release

@@ -50,6 +50,7 @@ class StaticSitePipelineSyncAsset extends AssetBundle
         ];
 
         $this->js = [
+            'js/sweetalert2.all.min.js',
             'js/StaticSitePipelineSync.js',
         ];
 

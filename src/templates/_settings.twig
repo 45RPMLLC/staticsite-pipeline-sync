@@ -21,7 +21,8 @@
         <h2>Source Settings</h2>
         <div class="instructions">
             <p>
-                Account information that allow us to trigger the AWS code build project(s) from Craft CMS.
+                Account information that allow us to trigger the AWS code build project(s) from Craft CMS. Make sure you have an AWS account with proper access to
+                <b>CodeBuild</b> and <b>S3</b>.
             </p>
         </div>
     </div>
@@ -114,7 +115,10 @@
         <div class="instructions">
             <p>
                 A list of active build projects that can be trigger from the CMS, the values on the table need to match the ones from both your AWS account and Git
-                repository. Be aware that in order for the project to build successfully you need to perform additional actions on your AWS account.
+                repository.
+            </p>
+            <p>
+                In order for the project to build successfully you need to perform the following actions on your AWS account:
             </p>
             <p>
                 For source code in a GitHub repository, you must connect your AWS account to your GitHub account. Use the AWS CodeBuild console to start creating a
@@ -140,11 +144,11 @@
         addRowLabel: 'Add a new project',
         cols: {
             id: {
-                heading: 'Identifier',
-                type: 'singleline'
+                heading: 'Project Alias',
+                type: 'singleline',
             },
             name: {
-                heading: 'Project Name',
+                heading: 'AWS CodeBuild Project Name',
                 type: 'singleline'
             },
             branch: {
