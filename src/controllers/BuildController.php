@@ -126,7 +126,7 @@ class BuildController extends Controller
                 ]
             ]);
 
-            return $this->asJson(['message' => "Content was pushed successfully! The Build ID for this operation is {$build['build']['id']}"]);
+            return $this->asJson(['message' => "Build ID is {$build['build']['id']}"]);
 
         } catch (\Exception $e) {
             Craft::error("Static Site Pipeline Sync error: {$e->getMessage()}", 'static-site-pipeline-sync');
